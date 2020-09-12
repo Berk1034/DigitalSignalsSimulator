@@ -41,6 +41,8 @@
             this.labelN = new System.Windows.Forms.Label();
             this.labelD = new System.Windows.Forms.Label();
             this.textBoxD = new System.Windows.Forms.TextBox();
+            this.buttonAddPoly = new System.Windows.Forms.Button();
+            this.buttonClearPoly = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // labelA
@@ -179,11 +181,33 @@
             this.textBoxD.TabIndex = 12;
             this.textBoxD.Text = "0,5";
             // 
+            // buttonAddPoly
+            // 
+            this.buttonAddPoly.Location = new System.Drawing.Point(280, 61);
+            this.buttonAddPoly.Name = "buttonAddPoly";
+            this.buttonAddPoly.Size = new System.Drawing.Size(174, 33);
+            this.buttonAddPoly.TabIndex = 13;
+            this.buttonAddPoly.Text = "Add to polyharmonics";
+            this.buttonAddPoly.UseVisualStyleBackColor = true;
+            this.buttonAddPoly.Click += new System.EventHandler(this.buttonAddPoly_Click);
+            // 
+            // buttonClearPoly
+            // 
+            this.buttonClearPoly.Location = new System.Drawing.Point(280, 100);
+            this.buttonClearPoly.Name = "buttonClearPoly";
+            this.buttonClearPoly.Size = new System.Drawing.Size(174, 37);
+            this.buttonClearPoly.TabIndex = 14;
+            this.buttonClearPoly.Text = "Clear polyharmonics";
+            this.buttonClearPoly.UseVisualStyleBackColor = true;
+            this.buttonClearPoly.Click += new System.EventHandler(this.buttonClearPoly_Click);
+            // 
             // DigitalSignalsSimulator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(462, 233);
+            this.Controls.Add(this.buttonClearPoly);
+            this.Controls.Add(this.buttonAddPoly);
             this.Controls.Add(this.textBoxD);
             this.Controls.Add(this.labelD);
             this.Controls.Add(this.labelN);
@@ -225,6 +249,8 @@
         private System.Windows.Forms.Label labelN;
         private System.Windows.Forms.Label labelD;
         private System.Windows.Forms.TextBox textBoxD;
+        private System.Windows.Forms.Button buttonAddPoly;
+        private System.Windows.Forms.Button buttonClearPoly;
     }
 }
 

@@ -14,7 +14,9 @@ namespace DigitalSignalsSimulator
     public partial class DigitalSignalsSimulator : Form
     {
         private List<double> generatedSignal = new List<double>();
+        private List<List<double>> polyHarmonicsSignal = new List<List<double>>();
         private const string PATH = "Result.wav";
+        private bool createPoly = false;
 
         public DigitalSignalsSimulator()
         {
@@ -23,52 +25,60 @@ namespace DigitalSignalsSimulator
             comboBoxWave.SelectedIndex = 0;
         }
 
-        public void GenerateSineWave(double A, double f, double Fi, int N)
+        public List<double> GenerateSineWave(double A, double f, double Fi, int N)
         {
-            generatedSignal.Clear();
+            List<double> generatedSignal = new List<double>();
             for (int n = 0; n < N; n++)
             {
                 var result = A * Math.Sin(2 * Math.PI * f * n / N + Fi);
                 generatedSignal.Add(result);
             }
+
+            return generatedSignal;
         }
 
-        public void GeneratePulseWave(double A, double f, double D, int N)
+        public List<double> GeneratePulseWave(double A, double f, double D, int N)
         {
-            generatedSignal.Clear();
+            List<double> generatedSignal = new List<double>();
             for (int n = 0; n < N; n++)
             {
                 //var result = D * f + 2 * Math.Sin(Math.PI * D * f) * Math.Cos(2 * Math.PI * n * f * n / N);
-                //var result = ((n / N) % (1 / f)) * f < D ? A : -A;
-                var result = Math.Sign(Math.Sin(2 * Math.PI * f * n / N)) < D ? A : -A;
+                //var result = ((n / N) % (1 / f)) * f < D ? A : 0;
+                var result = Math.Sign(Math.Sin(2 * Math.PI * f * n / N)) < D ? A : 0;
 
                 generatedSignal.Add(result);
             }
+
+            return generatedSignal;
         }
 
-        public void GenerateTriangleWave(double A, double f, int N)
+        public List<double> GenerateTriangleWave(double A, double f, int N)
         {
-            generatedSignal.Clear();
+            List<double> generatedSignal = new List<double>();
             for (int n = 0; n < N; n++)
             {
                 var result = 2 * A / Math.PI * Math.Asin(Math.Sin(2 * Math.PI * f * n / N));
                 generatedSignal.Add(result);
             }
+
+            return generatedSignal;
         }
 
-        public void GenerateSawtoothWave(double A, double f, int N)
+        public List<double> GenerateSawtoothWave(double A, double f, int N)
         {
-            generatedSignal.Clear();
+            List<double> generatedSignal = new List<double>();
             for (int n = 0; n < N; n++)
             {
                 var result = - 2 * A / Math.PI * Math.Atan(1.0 / Math.Tan(Math.PI * f * n / N));
                 generatedSignal.Add(result);
             }
+
+            return generatedSignal;
         }
 
-        public void GenerateNoise(double A, int N)
+        public List<double> GenerateNoise(double A, int N)
         {
-            generatedSignal.Clear();
+            List<double> generatedSignal = new List<double>();
 
             Random random = new Random();
 
@@ -77,9 +87,11 @@ namespace DigitalSignalsSimulator
                 var result = random.NextDouble() * 2 * A - A;
                 generatedSignal.Add(result);
             }
+
+            return generatedSignal;
         }
 
-        public void CreateWavFile()
+        public void CreateWavFile(List<double> data)
         {
             int subChunk1Size = 16;
             short audioFormat = 1;
@@ -112,39 +124,90 @@ namespace DigitalSignalsSimulator
                 for (int i = 0; i < numSamples; i++)
                 {
                     //var output = (byte)Math.Round(generatedSignal[i % generatedSignal.Count]);
-                    bw.Write((byte)Math.Round(generatedSignal[i % generatedSignal.Count]));
+                    bw.Write((byte)Math.Round(data[i % generatedSignal.Count]));
                 }
             }
         }
 
         private void buttonCreate_Click(object sender, EventArgs e)
         {
+            if (!createPoly)
+            {
+                double A = Convert.ToDouble(textBoxA.Text);
+                double f = Convert.ToDouble(textBoxF.Text);
+                double Fi = Convert.ToDouble(textBoxFi.Text);
+                double D = Convert.ToDouble(textBoxD.Text);
+                int N = Convert.ToInt32(comboBoxN.SelectedItem);
+
+                switch (comboBoxWave.SelectedIndex)
+                {
+                    case 0:
+                        generatedSignal = GenerateSineWave(A, f, Fi, N);
+                        break;
+                    case 1:
+                        generatedSignal = GeneratePulseWave(A, f, D, N);
+                        break;
+                    case 2:
+                        generatedSignal = GenerateTriangleWave(A, f, N);
+                        break;
+                    case 3:
+                        generatedSignal = GenerateSawtoothWave(A, f, N);
+                        break;
+                    case 4:
+                        generatedSignal = GenerateNoise(A, N);
+                        break;
+                }
+            }
+            else
+            {
+                generatedSignal = new List<double>(polyHarmonicsSignal[0]);
+                for (int i = 1; i < polyHarmonicsSignal.Count; i++)
+                {
+                    for (int j = 0; j < generatedSignal.Count; j++)
+                    {
+                        generatedSignal[j] += polyHarmonicsSignal[i][j];
+                    }
+                }
+
+                createPoly = false;
+            }
+
+            CreateWavFile(generatedSignal);
+        }
+
+        private void buttonAddPoly_Click(object sender, EventArgs e)
+        {
+            createPoly = true;
+
             double A = Convert.ToDouble(textBoxA.Text);
             double f = Convert.ToDouble(textBoxF.Text);
             double Fi = Convert.ToDouble(textBoxFi.Text);
             double D = Convert.ToDouble(textBoxD.Text);
             int N = Convert.ToInt32(comboBoxN.SelectedItem);
-
             switch (comboBoxWave.SelectedIndex)
             {
                 case 0:
-                    GenerateSineWave(A, f, Fi, N);
+                    polyHarmonicsSignal.Add(GenerateSineWave(A, f, Fi, N));
                     break;
                 case 1:
-                    GeneratePulseWave(A, f, D, N);
+                    polyHarmonicsSignal.Add(GeneratePulseWave(A, f, D, N));
                     break;
                 case 2:
-                    GenerateTriangleWave(A, f, N);
+                    polyHarmonicsSignal.Add(GenerateTriangleWave(A, f, N));
                     break;
                 case 3:
-                    GenerateSawtoothWave(A, f, N);
+                    polyHarmonicsSignal.Add(GenerateSawtoothWave(A, f, N));
                     break;
                 case 4:
-                    GenerateNoise(A, N);
+                    polyHarmonicsSignal.Add(GenerateNoise(A, N));
                     break;
             }
+        }
 
-            CreateWavFile();
+        private void buttonClearPoly_Click(object sender, EventArgs e)
+        {
+            polyHarmonicsSignal.Clear();
+            createPoly = false;
         }
     }
 }
