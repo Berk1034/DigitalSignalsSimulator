@@ -41,6 +41,8 @@
             this.textBoxD = new System.Windows.Forms.TextBox();
             this.buttonAddPoly = new System.Windows.Forms.Button();
             this.buttonClearPoly = new System.Windows.Forms.Button();
+            this.buttonModulateAmplitude = new System.Windows.Forms.Button();
+            this.buttonModulateFrequency = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // labelA
@@ -102,7 +104,7 @@
             // 
             // buttonCreate
             // 
-            this.buttonCreate.Location = new System.Drawing.Point(164, 161);
+            this.buttonCreate.Location = new System.Drawing.Point(163, 180);
             this.buttonCreate.Margin = new System.Windows.Forms.Padding(2);
             this.buttonCreate.Name = "buttonCreate";
             this.buttonCreate.Size = new System.Drawing.Size(94, 42);
@@ -175,11 +177,31 @@
             this.buttonClearPoly.UseVisualStyleBackColor = true;
             this.buttonClearPoly.Click += new System.EventHandler(this.buttonClearPoly_Click);
             // 
+            // buttonModulateAmplitude
+            // 
+            this.buttonModulateAmplitude.Location = new System.Drawing.Point(9, 116);
+            this.buttonModulateAmplitude.Name = "buttonModulateAmplitude";
+            this.buttonModulateAmplitude.Size = new System.Drawing.Size(149, 29);
+            this.buttonModulateAmplitude.TabIndex = 15;
+            this.buttonModulateAmplitude.Text = "Modulate Amplitude";
+            this.buttonModulateAmplitude.UseVisualStyleBackColor = true;
+            // 
+            // buttonModulateFrequency
+            // 
+            this.buttonModulateFrequency.Location = new System.Drawing.Point(9, 151);
+            this.buttonModulateFrequency.Name = "buttonModulateFrequency";
+            this.buttonModulateFrequency.Size = new System.Drawing.Size(149, 29);
+            this.buttonModulateFrequency.TabIndex = 16;
+            this.buttonModulateFrequency.Text = "Modulate Frequency";
+            this.buttonModulateFrequency.UseVisualStyleBackColor = true;
+            // 
             // DigitalSignalsSimulator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(462, 233);
+            this.Controls.Add(this.buttonModulateFrequency);
+            this.Controls.Add(this.buttonModulateAmplitude);
             this.Controls.Add(this.buttonClearPoly);
             this.Controls.Add(this.buttonAddPoly);
             this.Controls.Add(this.textBoxD);
@@ -221,6 +243,8 @@
         private System.Windows.Forms.TextBox textBoxD;
         private System.Windows.Forms.Button buttonAddPoly;
         private System.Windows.Forms.Button buttonClearPoly;
+        private System.Windows.Forms.Button buttonModulateAmplitude;
+        private System.Windows.Forms.Button buttonModulateFrequency;
     }
 }
 
