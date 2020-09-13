@@ -37,8 +37,6 @@
             this.buttonCreate = new System.Windows.Forms.Button();
             this.comboBoxWave = new System.Windows.Forms.ComboBox();
             this.labelWaveType = new System.Windows.Forms.Label();
-            this.comboBoxN = new System.Windows.Forms.ComboBox();
-            this.labelN = new System.Windows.Forms.Label();
             this.labelD = new System.Windows.Forms.Label();
             this.textBoxD = new System.Windows.Forms.TextBox();
             this.buttonAddPoly = new System.Windows.Forms.Button();
@@ -82,7 +80,7 @@
             this.textBoxA.Name = "textBoxA";
             this.textBoxA.Size = new System.Drawing.Size(72, 22);
             this.textBoxA.TabIndex = 3;
-            this.textBoxA.Text = "10";
+            this.textBoxA.Text = "25";
             // 
             // textBoxF
             // 
@@ -91,7 +89,7 @@
             this.textBoxF.Name = "textBoxF";
             this.textBoxF.Size = new System.Drawing.Size(72, 22);
             this.textBoxF.TabIndex = 4;
-            this.textBoxF.Text = "4";
+            this.textBoxF.Text = "100";
             // 
             // textBoxFi
             // 
@@ -137,30 +135,6 @@
             this.labelWaveType.Size = new System.Drawing.Size(104, 17);
             this.labelWaveType.TabIndex = 8;
             this.labelWaveType.Text = "Type of WAVE:";
-            // 
-            // comboBoxN
-            // 
-            this.comboBoxN.FormattingEnabled = true;
-            this.comboBoxN.Items.AddRange(new object[] {
-            "512",
-            "1024",
-            "2048",
-            "4096"});
-            this.comboBoxN.Location = new System.Drawing.Point(82, 141);
-            this.comboBoxN.Margin = new System.Windows.Forms.Padding(2);
-            this.comboBoxN.Name = "comboBoxN";
-            this.comboBoxN.Size = new System.Drawing.Size(62, 24);
-            this.comboBoxN.TabIndex = 9;
-            // 
-            // labelN
-            // 
-            this.labelN.AutoSize = true;
-            this.labelN.Location = new System.Drawing.Point(6, 144);
-            this.labelN.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.labelN.Name = "labelN";
-            this.labelN.Size = new System.Drawing.Size(74, 17);
-            this.labelN.TabIndex = 10;
-            this.labelN.Text = "Choose N:";
             // 
             // labelD
             // 
@@ -210,8 +184,6 @@
             this.Controls.Add(this.buttonAddPoly);
             this.Controls.Add(this.textBoxD);
             this.Controls.Add(this.labelD);
-            this.Controls.Add(this.labelN);
-            this.Controls.Add(this.comboBoxN);
             this.Controls.Add(this.labelWaveType);
             this.Controls.Add(this.comboBoxWave);
             this.Controls.Add(this.buttonCreate);
@@ -245,8 +217,6 @@
         private System.Windows.Forms.Button buttonCreate;
         private System.Windows.Forms.ComboBox comboBoxWave;
         private System.Windows.Forms.Label labelWaveType;
-        private System.Windows.Forms.ComboBox comboBoxN;
-        private System.Windows.Forms.Label labelN;
         private System.Windows.Forms.Label labelD;
         private System.Windows.Forms.TextBox textBoxD;
         private System.Windows.Forms.Button buttonAddPoly;
