@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NAudio.Wave;
 
 namespace DigitalSignalsSimulator.FileWriters
 {
@@ -23,9 +24,17 @@ namespace DigitalSignalsSimulator.FileWriters
 
         public void WriteAll(List<double> data)
         {
+
+            float[] newData = data.Select(x => (float)x).ToArray();
+            using (WaveFileWriter waveFileWriter = new WaveFileWriter(fileStream, new WaveFormat(sampleRate, 16, numChannels)))
+            {
+                waveFileWriter.WriteSamples(newData, 0, newData.Length);
+            }
+
+            /*
             byte[] chunkID = Encoding.ASCII.GetBytes("RIFF");
             byte[] format = Encoding.ASCII.GetBytes("WAVE");
-            byte[] subChunk1ID = Encoding.ASCII.GetBytes("fmt");
+            byte[] subChunk1ID = Encoding.ASCII.GetBytes("fmt ");
             byte[] subChunk2ID = Encoding.ASCII.GetBytes("data");
             int subChunk1Size = 16;
             short audioFormat = 1;
@@ -44,7 +53,6 @@ namespace DigitalSignalsSimulator.FileWriters
                 bw.Write(chunkSize);
                 bw.Write(format);
                 bw.Write(subChunk1ID);
-                bw.Write((byte)32);
                 bw.Write(subChunk1Size);
                 bw.Write(audioFormat);
                 bw.Write(numChannels);
@@ -60,6 +68,7 @@ namespace DigitalSignalsSimulator.FileWriters
                     bw.Write((byte)Math.Round(data[i % data.Count]));
                 }
             }
+            //*/
         }
     }
 }
