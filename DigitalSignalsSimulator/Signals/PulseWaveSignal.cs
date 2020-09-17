@@ -10,17 +10,11 @@ namespace DigitalSignalsSimulator.Signals
     {
         public double DutyCycle { get; set; }
 
-        public override List<double> GenerateSignal()
+        public override double GenerateSample()
         {
-            List<double> generatedSignal = new List<double>();
-
-            for (int n = 0; n < SampleRate; n++)
-            {
-                var result = ((double)n / SampleRate % (1.0 / Frequency) * Frequency) > DutyCycle ? 0.0 : Amplitude;
-                generatedSignal.Add(result);
-            }
-
-            return generatedSignal;
+            FiAngle += 2 * Math.PI * Frequency * (1 + (FM?.GenerateSample() ?? 0)) / SampleRate;
+            var cycle = 2 * Math.PI;
+            return (FiAngle % cycle) / cycle > DutyCycle ? 0.0 : Amplitude;
         }
     }
 }

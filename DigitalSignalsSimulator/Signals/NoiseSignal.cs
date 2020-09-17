@@ -10,17 +10,9 @@ namespace DigitalSignalsSimulator.Signals
     {
         private Random random = new Random();
 
-        public override List<double> GenerateSignal()
+        public override double GenerateSample()
         {
-            List<double> generatedSignal = new List<double>();
-
-            for (int n = 0; n < SampleRate; n++)
-            {
-                var result = random.NextDouble() * 2 * Amplitude - Amplitude;
-                generatedSignal.Add(result);
-            }
-
-            return generatedSignal;
+            return random.NextDouble() * 2 * Amplitude - Amplitude;
         }
     }
 }

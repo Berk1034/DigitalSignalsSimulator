@@ -8,18 +8,10 @@ namespace DigitalSignalsSimulator.Signals
 {
     public class SineWaveSignal : Signal
     {
-        public double FiAngle { get; set; }
-
-        public override List<double> GenerateSignal()
+        public override double GenerateSample()
         {
-            List<double> generatedSignal = new List<double>();
-            for (int n = 0; n < SampleRate; n++)
-            {
-                var result = Amplitude * Math.Sin(2 * Math.PI * Frequency * n / SampleRate + FiAngle);
-                generatedSignal.Add(result);
-            }
-
-            return generatedSignal;
+            FiAngle += 2 * Math.PI * Frequency * (1 + (FM?.GenerateSample() ?? 0)) / SampleRate;
+            return Amplitude * Math.Sin(FiAngle);
         }
     }
 }

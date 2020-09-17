@@ -8,16 +8,10 @@ namespace DigitalSignalsSimulator.Signals
 {
     public class TriangleWaveSignal : Signal
     {
-        public override List<double> GenerateSignal()
+        public override double GenerateSample()
         {
-            List<double> generatedSignal = new List<double>();
-            for (int n = 0; n < SampleRate; n++)
-            {
-                var result = 2 * Amplitude / Math.PI * Math.Asin(Math.Sin(2 * Math.PI * Frequency * n / SampleRate));
-                generatedSignal.Add(result);
-            }
-
-            return generatedSignal;
+            FiAngle += 2 * Math.PI * Frequency * (1 + (FM?.GenerateSample() ?? 0)) / SampleRate;
+            return 2 * Amplitude / Math.PI * Math.Asin(Math.Sin(FiAngle));
         }
     }
 }
