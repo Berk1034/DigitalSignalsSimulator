@@ -13,7 +13,7 @@ namespace DigitalSignalsSimulator.Signals
         public double Amplitude { get; set; }
         public double Frequency { get; set; }
         public double FiAngle { get; set; } = default;
-        public int SampleRate { get; set; } = 44100 * 10;
+        public int SampleRate { get; set; } = 44100;
 
         public abstract double GenerateSample();
         public List<double> GenerateSignal()

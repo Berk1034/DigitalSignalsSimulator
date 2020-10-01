@@ -23,6 +23,7 @@ namespace DigitalSignalsSimulator
         private const string PATH = "Result.wav";
         private bool createPoly = false;
         private int sampleRate = 44100;
+        private int soundLength = 10;
 
         public DigitalSignalsSimulator()
         {
@@ -66,7 +67,7 @@ namespace DigitalSignalsSimulator
             }
 
             var wavFileWriter = new WavFileWriter(new FileStream(PATH, FileMode.Create), sampleRate, 1000000, 1);
-            wavFileWriter.WriteAll(generatedSignal);
+            wavFileWriter.WriteAll(generatedSignal, 10);
         }
 
         private void buttonAddPoly_Click(object sender, EventArgs e)
@@ -104,7 +105,7 @@ namespace DigitalSignalsSimulator
 
                 generatedSignal = currentSignal.GenerateSignal();
                 var wavFileWriter = new WavFileWriter(new FileStream(PATH, FileMode.Create), sampleRate, 1000000, 1);
-                wavFileWriter.WriteAll(generatedSignal);
+                wavFileWriter.WriteAll(generatedSignal, soundLength);
             }
         }
 
@@ -122,7 +123,7 @@ namespace DigitalSignalsSimulator
 
                 generatedSignal = currentSignal.GenerateSignal();
                 var wavFileWriter = new WavFileWriter(new FileStream(PATH, FileMode.Create), sampleRate, 1000000, 1);
-                wavFileWriter.WriteAll(generatedSignal);
+                wavFileWriter.WriteAll(generatedSignal, soundLength);
             }
         }
 

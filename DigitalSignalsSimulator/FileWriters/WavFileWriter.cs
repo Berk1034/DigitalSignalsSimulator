@@ -22,13 +22,16 @@ namespace DigitalSignalsSimulator.FileWriters
             this.numChannels = numChannels;
         }
 
-        public void WriteAll(List<double> data)
+        public void WriteAll(List<double> data, int soundLength)
         {
 
             float[] newData = data.Select(x => (float)x).ToArray();
             using (WaveFileWriter waveFileWriter = new WaveFileWriter(fileStream, new WaveFormat(sampleRate, 16, numChannels)))
             {
-                waveFileWriter.WriteSamples(newData, 0, newData.Length);
+                for (int i = 0; i < soundLength; i++)
+                {
+                    waveFileWriter.WriteSamples(newData, 0, newData.Length);
+                }
             }
 
             /*
